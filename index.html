@@ -38,6 +38,7 @@
 		var text;
 		var score = 0;
 		var text;
+		var background;
 
 		/**
 		 * [preload: This function is used to load the assets for our game]
@@ -55,6 +56,13 @@
 
 			//player animations
 			this.load.atlas('player', 'assets/player.png', 'assets/player.json');
+
+			this.load.image('sky', 'assets/sky.png');
+
+
+
+
+
 		}
 
 		/**
@@ -62,6 +70,34 @@
 		 * @return {[void]} [Returns void]
 		 */
 		function create(){
+
+					this.add.image(741.75, 8235, "sky").setScale(0.5);
+					this.add.image(2225.25, 8235, "sky").setScale(0.5);
+					this.add.image(3708.75, 8235, "sky").setScale(0.5);
+					this.add.image(5192.25, 8235, "sky").setScale(0.5);
+
+					this.add.image(741.75, 7400, "sky").setScale(0.5);
+					this.add.image(2225.25, 7400, "sky").setScale(0.5);
+					this.add.image(3708.75, 7400, "sky").setScale(0.5);
+					this.add.image(5192.25, 7400, "sky").setScale(0.5);
+
+					this.add.image(741.75, 6565, "sky").setScale(0.5);
+					this.add.image(2225.25, 6565, "sky").setScale(0.5);
+					this.add.image(3708.75, 6565, "sky").setScale(0.5);
+					this.add.image(5192.25, 6565, "sky").setScale(0.5);
+
+					this.add.image(741.75, 5730, "sky").setScale(0.5);
+					this.add.image(2225.25, 5730, "sky").setScale(0.5);
+					this.add.image(3708.75, 5730, "sky").setScale(0.5);
+					this.add.image(5192.25, 5730, "sky").setScale(0.5);
+
+
+
+
+
+
+
+
 
 			//WORLD
 				//load map
@@ -83,8 +119,8 @@
 
 			//PLAYER
 				
-				player = this.physics.add.sprite(200,200, 'player');
-				player.setBounce(0.2);
+				player = this.physics.add.sprite(315, 7400, 'player');
+				player.setBounce(0.5);
 				player.setCollideWorldBounds(true);
 
 				//Add Keyboard Events
@@ -107,14 +143,14 @@
 				this.anims.create({
 					key : "walk",
 					frames: this.anims.generateFrameNames('player', {prefix: 'p1_walk', start: 1, end: 11, zeroPad: 2}),
-					frameRate: 10,
+					frameRate: 50,
 					repeat: -1 // loop forever
 				});
 
 				this.anims.create({
 					key: 'idle',
 					frames: [{key: 'player', frame: 'p1_stand'}],
-					frameRate : 10
+					frameRate : 50
 				})
 
 
@@ -138,7 +174,7 @@
 			
 			//SCORE UI
 				
-				text = this.add.text(20, 570, '0', {
+				text = this.add.text(20, 570, 'Coins = ' + score + '/7', {
 					fontSize : '20px',
 					fill: '#ffffff'
 				});
@@ -152,11 +188,10 @@
 		 */
 		function update(){
 			//EVENTS / MECHANICS
-			
-				
+
 				if( cursors.left.isDown ){ // If the left arrow key is pressed down
 					//activate motion
-					player.body.setVelocityX(-200);
+					player.body.setVelocityX(-400);
 
 					//activate animation
 					player.anims.play('walk', true);
@@ -164,9 +199,12 @@
 					//flip image horizontally
 					player.flipX = true;
 
+					// background.body.setVelocityX(-player.velocity)
+
+
 				}else if(cursors.right.isDown){  // If the right arrow key is pressed down
 					//activate motion
-					player.body.setVelocityX(200);
+					player.body.setVelocityX(500);
 
 					//activate animation
 					player.anims.play('walk', true);
@@ -174,6 +212,9 @@
 					//flip image horizontally
 					player.flipX = false;
 
+				}else{
+					player.body.setVelocityX(0)
+					player.anims.play('idle', true);
 				}
 
 				if((cursors.space.isDown || cursors.up.isDown) && player.body.onFloor()){
@@ -197,7 +238,7 @@
 			score++;
 
 			//update Score UI
-			text.setText(score);
+			text.setText('Coins = ' + score + '/7');
 
 			return false;
 		}
